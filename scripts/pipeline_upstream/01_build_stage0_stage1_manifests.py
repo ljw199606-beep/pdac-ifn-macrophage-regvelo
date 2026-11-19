@@ -291,7 +291,7 @@ prov_rows = [
         "dataset_id": "GSE154778_Lin2020",
         "role_in_study": "Independent scRNA-seq cohort for primary-vs-metastatic state comparison & lineage-restricted RNA splicing / RegVelo dynamical modeling",
         "primary_citation": "Lin W et al., Genome Medicine 2020;12:80 (PMID: 32988401)",
-        "primary_accession": "GSE154778 / SRP272677 / PRJNA647635 (16 GSMs, 120 SRA FASTQ runs)",
+        "primary_accession": "GSE154778 / SRP272677 / PRJNA647411 (16 GSMs, 120 SRA FASTQ runs)",
         "secondary_distribution": "Re-quantified in-house from 120 raw SRA FASTQ runs via STARsolo 2.7.11b (GRCh38 + GENCODE v44, Gene + Velocyto)",
         "platform": "10x Genomics Chromium scRNA-seq",
         "n_patients": 16,
