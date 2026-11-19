@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.h5ad
+*.fastq.gz
+*.bam
+*.tar
+*.tar.gz
+reproduced_figures/
