@@ -1,0 +1,71 @@
+{
+  "n_cohorts": 5,
+  "n_unique_subjects_primary_247": 247,
+  "n_pdac_patients_primary_236": 236,
+  "n_control_donors_11": 11,
+  "n_specimens_primary_270": 270,
+  "n_unique_subjects_incl_unfiltered_tcga_278": 278,
+  "n_sc_sn_donors_94": 94,
+  "n_sc_sn_spatial_donors_101": 101,
+  "n_sc_sn_qc_macrophages_total_18819": 18819,
+  "n_paired_Q2_donors_total_80": 80,
+  "Peng2019": {
+    "n_donors": 35,
+    "n_pdac": 24,
+    "n_ctrl": 11,
+    "n_cells_raw": 57530,
+    "n_cells_qc": 57423,
+    "n_genes": 18008,
+    "n_mac": 5361,
+    "n_mac_donors_ge1": 34,
+    "n_paired_Q2_min5": 31
+  },
+  "GSE202051": {
+    "n_patients": 43,
+    "n_untreated": 18,
+    "n_neoadjuvant": 25,
+    "n_ctrl": 0,
+    "n_nuclei_total": 224988,
+    "n_genes": 22164,
+    "n_mac": 10140,
+    "n_paired_Q2_min5": 34,
+    "n_paired_untreated": 12,
+    "n_paired_neoadjuvant": 22
+  },
+  "GSE154778": {
+    "n_patients": 16,
+    "n_primary": 10,
+    "n_metastasis": 6,
+    "n_srr_runs": 120,
+    "n_emptydrops": 38573,
+    "n_cells_qc": 30399,
+    "n_genes": 38606,
+    "n_mac": 3318,
+    "n_ductal_all": 14827,
+    "n_ductal_malignant_subset": 10042,
+    "n_paired_Q2_min5": 15
+  },
+  "GSE272362": {
+    "n_patients": 7,
+    "n_sections_geo": 30,
+    "n_sections_unique_lesions": 29,
+    "n_PT": 10,
+    "n_HM": 12,
+    "n_LNM": 5,
+    "n_NP_matched_autopsy": 3,
+    "n_array_barcodes": 149760,
+    "n_in_tissue_spots_spaceranger": 97020,
+    "n_in_tissue_spots_29sec": 96057,
+    "n_post_qc_spots_khaliq_series": 91496,
+    "n_qc_filtered_spots_diff": 5524
+  },
+  "TCGA_PAAD": {
+    "n_all_paad": 177,
+    "n_excluded_non_ductal": 31,
+    "n_pure_ductal": 146,
+    "n_pure_ductal_os_valid": 145,
+    "n_pure_ductal_os_events": 84,
+    "n_pure_ductal_multi_complete": 144,
+    "n_pure_ductal_multi_events": 84
+  }
+}

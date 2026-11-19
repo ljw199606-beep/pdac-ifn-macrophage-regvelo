@@ -1,0 +1,19 @@
+figure	panel	source_data_file	generator_script	description
+Figure1	a	Figure1a_cohort_architecture_247_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Reconciled 5-cohort 247-donor / 270-specimen study design
+Figure1	b-c	Figure1c_canonical_markers_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Peng2019 57,423-cell UMAP & canonical lineage dotplot
+Figure1	d-e	Figure1d_donor_composition_stats_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Donor-level cellular remodeling across 24 PDAC vs 11 control donors
+Figure2	a-b	Figure2b_peng_donor_Q1_proportions_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Non-circular IFN-14/IFN-10 TAM UMAP & Rule Q1 donor expansion
+Figure2	c	Figure2c_peng_paired_edgeR_IFN14_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Rule Q2 paired edgeR QL volcano across 15,030 non-defining genes (n=31 donors)
+Figure2	d	Figure2d_background_signal_attenuation_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Paired within-donor attenuation of non-macrophage background transcripts
+Figure2	e	Figure2e_noncircular_fgsea_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Non-circular MSigDB Hallmark + MHC/checkpoint module fgsea
+Figure3	a	Figure3a_gse202051_treatment_detectability_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	IFN-high TAM detectability across therapy & lesion site
+Figure3	b	Figure3b_donor_bootstrap_concordance_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	1,000-draw two-cohort donor-resampling bootstrap CIs & LODO on Spearman rho
+Figure3	c-d	Figure3c_cd47_paired_slopegraphs_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Patient-paired CD47 slopegraphs & 4-stratum functional panel
+Figure4	a-b	Figure4a_collectri_vs_pyscenic_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Non-circular CollecTRI vs pySCENIC & hard-constraint mask verification
+Figure4	c	Figure4c_regvelo_1000perm_macrophage_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	N_perm=1,000 degree+expr-matched RegVelo screen with BH q & 16-donor CIs
+Figure4	d-e	Figure4de_macrophage_evidence_matrix_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	5-layer macrophage evidence matrix & Dirichlet/LOLO rank stability
+Figure5	a-b	Figure5a_expression_inferred_lr_audit_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Expression-inferred juxtacrine/paracrine LR candidates & balanced subsampling
+Figure5	c-d	Figure5cd_gse272362_patient_and_site_morans_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	GSE272362 7-patient & site-stratified univariate Moran's I (97,020 in-tissue spots)
+Figure6	a	Figure6a_tcga_cox_with_BH_q_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Pure-ductal TCGA-PAAD Models 2 & 3 Cox OS with panel-wide BH q
+Figure6	b	Figure6b_tcga_pure_ductal_km_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Descriptive median-split Kaplan-Meier OS curve & risk table (n=145)
+Figure6	c	Figure6c_tcga_partial_spearman_source.tsv	04_Reproducibility/scripts/csbj_05_render_all_figures_and_tables.py	Raw vs purity/leukocyte-adjusted partial Spearman STAT1 correlations
