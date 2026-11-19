@@ -1,13 +1,16 @@
 cff-version: 1.2.0
 message: "If you use this code or derived source data, please cite the accompanying CSBJ manuscript and Zenodo archive."
 title: "Patient-reproducible interferon-associated macrophage states in pancreatic ductal adenocarcinoma: donor-aware integration of cis-regulatory networks, RNA velocity, and spatial transcriptomics"
-version: "1.0.0"
-date-released: "2026-11-18"
+version: "1.1.0"
+date-released: "2026-11-19"
 license: "MIT"
+repository-code: "https://github.com/ljw199606-beep/pdac-ifn-macrophage-regvelo"
+doi: "10.5281/zenodo.24357709"
 authors:
   - family-names: "Li"
     given-names: "Jingwei"
     affiliation: "College of Clinical Traditional Chinese Medicine, Gansu University of Chinese Medicine, Lanzhou 730000, China"
+    orcid: "https://orcid.org/0000-0001-8221-7569"
   - family-names: "Chen"
     given-names: "Yuchan"
     affiliation: "College of Integrated Traditional Chinese and Western Medicine, Gansu University of Chinese Medicine, Lanzhou 730000, China"
