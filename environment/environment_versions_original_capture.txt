@@ -1,0 +1,18 @@
+﻿=== Reproducibility Environment Capture (2026-11-16) ===
+--- WSL regvelo Python & Packages ---
+Python: 3.11.18
+torch: 2.11.0+cu128 CUDA: True NVIDIA GeForce RTX 5080
+regvelo: 0.4.2
+scvi-tools: 1.2.0
+cellrank: 2.0.7
+scanpy: 1.11.5
+anndata: 0.12.19
+numpy: 1.26.4 scipy: 1.15.3 pandas: 2.3.3
+--- WSL R & Bioconductor Packages ---
+R: R version 4.5.2 (2025-10-31 ucrt) 
+WSL bioinfo R: R version 4.4.3 (2025-02-28) 
+edgeR 4.4.0 
+limma 3.62.1 
+fgsea 1.32.2 
+survival 3.8.6 
+splines 4.4.3 

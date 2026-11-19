@@ -1,0 +1,7 @@
+# Verified R / Bioconductor environment (WSL2 Ubuntu R 4.4.3 used for exact 111-run edgeR LODO & voom bootstrap)
+R==4.4.3
+edgeR==4.4.0
+limma==3.62.1
+fgsea==1.32.2
+survival==3.8.6
+splines==4.4.3

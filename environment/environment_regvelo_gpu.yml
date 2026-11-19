@@ -1,0 +1,22 @@
+name: pdac_regvelo_csbj
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.11
+  - numpy=1.26.4
+  - scipy=1.15.3
+  - pandas=2.3.3
+  - matplotlib>=3.9
+  - openpyxl>=3.1
+  - pip
+  - pip:
+      - torch==2.11.0
+      - scvi-tools==1.2.0
+      - regvelo==0.4.2
+      - cellrank==2.0.7
+      - scanpy==1.11.5
+      - anndata==0.12.19
+      - decoupler>=1.8
+      - pyscenic==0.12.1
