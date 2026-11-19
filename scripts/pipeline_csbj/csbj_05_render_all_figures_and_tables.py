@@ -402,15 +402,19 @@ ax2c = fig2.add_subplot(gs2[1, 0])
 panel_label(ax2c, "c", x=-0.20, y=1.08)
 non_def = de_peng[~de_peng["in_defining_signature"]].copy()
 non_def["neglog10_fdr"] = -np.log10(np.clip(non_def["FDR_edgeR_nonDefining"].values, 1e-35, 1.0))
+sig_up_all = int(((non_def["FDR_edgeR_nonDefining"] < 0.05) & (non_def["log2FC_edgeR"] > 0.0)).sum())
+sig_dn_all = int(((non_def["FDR_edgeR_nonDefining"] < 0.05) & (non_def["log2FC_edgeR"] < 0.0)).sum())
 sig_up = (non_def["FDR_edgeR_nonDefining"] < 0.05) & (non_def["log2FC_edgeR"] > 0.25)
 sig_dn = (non_def["FDR_edgeR_nonDefining"] < 0.05) & (non_def["log2FC_edgeR"] < -0.25)
 ns_m   = ~(sig_up | sig_dn)
 
 ax2c.scatter(non_def.loc[ns_m, "log2FC_edgeR"], non_def.loc[ns_m, "neglog10_fdr"], s=3.5, c=CB_PAL["light_slate"], alpha=0.55, linewidths=0, rasterized=True)
-ax2c.scatter(non_def.loc[sig_dn, "log2FC_edgeR"], non_def.loc[sig_dn, "neglog10_fdr"], s=6.0, c=CB_PAL["ifn_low"], alpha=0.78, linewidths=0, label=f"Down (n={int(sig_dn.sum())})")
-ax2c.scatter(non_def.loc[sig_up, "log2FC_edgeR"], non_def.loc[sig_up, "neglog10_fdr"], s=6.5, c=CB_PAL["ifn_high"], alpha=0.82, linewidths=0, label=f"Up non-IFN14 (n={int(sig_up.sum())})")
+ax2c.scatter(non_def.loc[sig_dn, "log2FC_edgeR"], non_def.loc[sig_dn, "neglog10_fdr"], s=6.0, c=CB_PAL["ifn_low"], alpha=0.78, linewidths=0, label=f"Down |FC|>0.25 (n={int(sig_dn.sum())}; {sig_dn_all} all)")
+ax2c.scatter(non_def.loc[sig_up, "log2FC_edgeR"], non_def.loc[sig_up, "neglog10_fdr"], s=6.5, c=CB_PAL["ifn_high"], alpha=0.82, linewidths=0, label=f"Up |FC|>0.25 (n={int(sig_up.sum())}; {sig_up_all} all)")
 ax2c.axhline(-np.log10(0.05), color="#555555", ls="--", lw=0.65)
-ax2c.axvline(0.0, color="#888888", ls=":", lw=0.6)
+ax2c.axvline(-0.25, color="#94A3B8", ls=":", lw=0.55)
+ax2c.axvline(0.25, color="#94A3B8", ls=":", lw=0.55)
+ax2c.axvline(0.0, color="#888888", ls="-", lw=0.45, alpha=0.5)
 
 callout_offsets = {
     "STAT1":  (0.65,  2.2),
@@ -431,7 +435,7 @@ for g_lbl, (dx, dy) in callout_offsets.items():
                       color="#111111", arrowprops=dict(arrowstyle="-", lw=0.5, color="#444444"))
 
 lodo_stat1 = str(edger_lodo.query("cohort_model == 'Peng2019_Q2_IFN14_min5' and gene == 'STAT1'")["edgeR_LODO_runs_FDR_lt_005"].iloc[0])
-ax2c.text(-3.05, 23.2, f"Exact edgeR LODO:\nSTAT1/TAP1/HLA-A\nFDR<0.05 in {lodo_stat1}",
+ax2c.text(-3.05, 21.0, f"Exact edgeR LODO:\nSTAT1/TAP1/HLA-A\nFDR<0.05 in {lodo_stat1}",
           fontsize=5.2, bbox=dict(boxstyle="round,pad=0.22", facecolor="#F8FAFC", edgecolor="#CBD5E1", lw=0.5))
 ax2c.set_xlim(-3.2, 4.4); ax2c.set_ylim(-1, 35)
 ax2c.set_xlabel("Within-donor paired log2FC (IFN-high vs IFN-low)")
@@ -540,7 +544,7 @@ reg_src("Figure3", "c-d", "Figure3c_cd47_paired_slopegraphs_source.tsv", "Patien
 
 fig3 = plt.figure(figsize=(DOUBLE_COL_IN, 7.45))
 gs3 = gridspec.GridSpec(3, 1, figure=fig3, height_ratios=[1.10, 1.00, 1.24], hspace=0.52)
-gs3_top = gridspec.GridSpecFromSubplotSpec(1, 2, subplot_spec=gs3[0], width_ratios=[0.88, 1.12], wspace=0.74)
+gs3_top = gridspec.GridSpecFromSubplotSpec(1, 2, subplot_spec=gs3[0], width_ratios=[0.84, 1.16], wspace=0.80)
 gs3_mid = gridspec.GridSpecFromSubplotSpec(1, 3, subplot_spec=gs3[1], wspace=0.34)
 
 # Panel 3a: Detectability Across Neoadjuvant Therapy (GSE202051) & Lesion Site (GSE154778)
@@ -582,44 +586,48 @@ ax3a.legend(
     loc="upper right", frameon=True, facecolor="white", framealpha=0.92, edgecolor="none", fontsize=5.2,
 )
 
-# Panel 3b: Upgraded Cross-Cohort Concordance Forest Plot (1,000-Draw Two-Cohort Donor-Bootstrap 95% CIs + LODO!)
+# Panel 3b: Upgraded Cross-Cohort Concordance Forest Plot (Dynamic n_genes + Matched voom CI & edgeR!)
 ax3b = fig3.add_subplot(gs3_top[1])
-panel_label(ax3b, "b", x=-0.46, y=1.06)
+panel_label(ax3b, "b", x=-0.46, y=1.08)
 conc_specs = [
-    ("GSE202051_All43_Q2_IFN14_min5", "1_", "GSE202051 All (n=34): all 12.9k genes", CB_PAL["slate"]),
-    ("GSE202051_All43_Q2_IFN14_min5", "2_", "GSE202051 All (n=34): 23-gene panel", CB_PAL["neoadjuvant"]),
-    ("GSE202051_All43_Q2_IFN14_min5", "3_", "GSE202051 All (n=34): 299 disc. DEGs", CB_PAL["neoadjuvant"]),
-    ("GSE202051_Untreated18_Q2_IFN14_min5", "2_", "Untreated (n=12): 23-gene panel", CB_PAL["untreated"]),
-    ("GSE202051_Untreated18_Q2_IFN14_min5", "3_", "Untreated (n=12): 252 disc. DEGs", CB_PAL["untreated"]),
-    ("GSE202051_Neoadjuvant25_Q2_IFN14_min5", "3_", "Neoadjuvant (n=22): 288 disc. DEGs", "#B45309"),
-    ("GSE154778_All16_Q2_IFN14_min5", "1_", "GSE154778 (n=15): all 11.4k genes", CB_PAL["slate"]),
-    ("GSE154778_All16_Q2_IFN14_min5", "2_", "GSE154778 (n=15): 23-gene panel", CB_PAL["purple"]),
-    ("GSE154778_All16_Q2_IFN14_min5", "3_", "GSE154778 (n=15): 317 disc. DEGs", CB_PAL["purple"]),
+    ("GSE202051_All43_Q2_IFN14_min5", "1_", "GSE202051 (n=34): all", CB_PAL["slate"]),
+    ("GSE202051_All43_Q2_IFN14_min5", "2_", "GSE202051 (n=34): panel", CB_PAL["neoadjuvant"]),
+    ("GSE202051_All43_Q2_IFN14_min5", "3_", "GSE202051 (n=34): DEGs", CB_PAL["neoadjuvant"]),
+    ("GSE202051_Untreated18_Q2_IFN14_min5", "2_", "Untreated (n=12): panel", CB_PAL["untreated"]),
+    ("GSE202051_Untreated18_Q2_IFN14_min5", "3_", "Untreated (n=12): DEGs", CB_PAL["untreated"]),
+    ("GSE202051_Neoadjuvant25_Q2_IFN14_min5", "3_", "Neoadj (n=22): DEGs", "#B45309"),
+    ("GSE154778_All16_Q2_IFN14_min5", "1_", "GSE154778 (n=15): all", CB_PAL["slate"]),
+    ("GSE154778_All16_Q2_IFN14_min5", "2_", "GSE154778 (n=15): panel", CB_PAL["purple"]),
+    ("GSE154778_All16_Q2_IFN14_min5", "3_", "GSE154778 (n=15): DEGs", CB_PAL["purple"]),
 ]
 y_c = np.arange(len(conc_specs))[::-1]
 ax3b.axvline(0.0, color="#666666", ls="--", lw=0.7)
+dyn_ylabels = []
 for idx_r, (vm, g_pref, lbl_r, col_r) in enumerate(conc_specs):
     yv = y_c[idx_r]
     rc = conc_voom[(conc_voom["validation_cohort_model"] == vm) & (conc_voom["gene_set_definition"].str.startswith(g_pref))].iloc[0]
+    ng_r  = int(rc["n_genes"])
     rho_e = float(rc["edgeR_spearman_rho"])
     rho_v = float(rc["voom_precision_spearman_rho"])
     lo_b  = float(rc["donor_bootstrap_95CI_low"])
     hi_b  = float(rc["donor_bootstrap_95CI_high"])
     lodo_lo = float(rc["LODO_min_spearman_rho"])
     lodo_hi = float(rc["LODO_max_spearman_rho"])
+    dyn_ylabels.append(f"{lbl_r} (g={ng_r:,})")
     ax3b.plot([lo_b, hi_b], [yv, yv], color=col_r, lw=1.35, zorder=2)
     ax3b.plot([lodo_lo, lodo_hi], [yv, yv], color="#111111", lw=2.4, alpha=0.35, zorder=3)
     ax3b.scatter([rho_v], [yv], s=18, color=col_r, edgecolors="#111111", linewidths=0.45, zorder=4,
-                 label="voom rho (+boot CI)" if idx_r == 0 else None)
+                 label="voom (+boot CI & LODO)" if idx_r == 0 else None)
     ax3b.scatter([rho_e], [yv], s=18, marker="D", facecolors="white", edgecolors=col_r, linewidths=0.95, zorder=5,
-                 label="edgeR rho" if idx_r == 0 else None)
-    ax3b.text(1.01, yv, f"{rho_e:.2f} [{lo_b:.2f},{hi_b:.2f}]", va="center", ha="left", fontsize=5.0, color="#111111")
+                 label="edgeR QL" if idx_r == 0 else None)
+    ax3b.text(0.84, yv, f"v={rho_v:.2f} [{lo_b:.2f},{hi_b:.2f}] | e={rho_e:.2f}", va="center", ha="left", fontsize=4.65, color="#111111")
 
 ax3b.set_yticks(y_c)
-ax3b.set_yticklabels([r[2] for r in conc_specs], fontsize=5.35)
-ax3b.set_xlim(-0.08, 1.44)
-ax3b.set_xlabel("Gene-level paired log2FC Spearman rho (donor-boot 95% CI)")
-ax3b.set_title("Cross-cohort effect concordance (thin: boot CI; thick: LODO)", fontsize=7.1)
+ax3b.set_yticklabels(dyn_ylabels, fontsize=5.15)
+ax3b.set_xlim(-0.25, 1.66)
+ax3b.set_xlabel("Paired log2FC Spearman rho (voom 95% CI & LODO)", fontsize=6.6)
+ax3b.set_title("Cross-cohort concordance (v = voom; e = edgeR)", fontsize=7.0, pad=13)
+ax3b.legend(loc="upper center", bbox_to_anchor=(0.45, 1.11), ncol=2, frameon=False, fontsize=4.9, handletextpad=0.3, columnspacing=0.8)
 despine(ax3b)
 
 # Panel 3c: Patient-Paired CD47 Slopegraphs Across All 3 Cohorts
@@ -849,7 +857,7 @@ ax4e.scatter(top12_rev["primary_rank"].values, y_4e, s=24, color=CB_PAL["ifn_hig
 ax4e.scatter(top12_rev["rank_drop_M5_RegVelo"].values, y_4e, s=20, marker="D", facecolors="white", edgecolors=CB_PAL["purple"], linewidths=0.9, zorder=5, label="Drop M5 (RegVelo)")
 ax4e.set_yticks(y_4e)
 ax4e.set_yticklabels(top12_rev["TF"].tolist(), fontsize=5.9)
-ax4e.set_xlabel("Macrophage TF rank (1 = strongest complementary support)")
+ax4e.set_xlabel("Macrophage TF rank (1 = strongest support)", fontsize=6.8)
 ax4e.set_title("Dirichlet weight & leave-M5-out rank stability", fontsize=7.15)
 ax4e.invert_xaxis()
 despine(ax4e)
@@ -903,7 +911,7 @@ ax5a.axvline(0.0, color="#666666", ls=":", lw=0.7)
 ax5a.set_yticks(y_lr)
 ax5a.set_yticklabels(valid_lr["axis_lbl"].values, fontsize=5.6)
 ax5a.set_xlim(-0.32, 3.05)
-ax5a.set_xlabel("Paired co-expression log2FC (capped at 2.75)")
+ax5a.set_xlabel("Paired co-expression log2FC (n=24 PDAC donors; cap 2.75)")
 ax5a.set_title("Expression-inferred candidate LR pairs", fontsize=7.1)
 despine(ax5a)
 ax5a.legend(
